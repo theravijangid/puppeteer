@@ -4,15 +4,13 @@ const puppeteer = require("puppeteer");
 const app = express();
 const PORT = 3000;
 
-// Function to fetch reviews for a product
-
 app.get("/search", async (req, res) => {
   const keyword = req.query.keyword;
   
   if (!keyword) {
     return res.status(404).json({
       success: false,
-      error: "Please provide a keyword",
+      error: "Please search for a keyword",
     });
   }
 
@@ -30,11 +28,11 @@ app.get("/search", async (req, res) => {
       for (let i = 0; i < 4 && i < productElements.length; i++) {
         const element = productElements[i];
 
-        const name = element.querySelector("span.a-color-base ")?.innerText || "N/A";
-        const description = element.querySelector("span.a-text-normal")?.innerText || "N/A";
-        const rating = element.querySelector("span.a-icon-alt")?.innerText || "N/A";
-        const reviews = element.querySelector("span.a-size-base")?.innerText || "N/A";
-        const price = element.querySelector("span.a-offscreen")?.innerText || "N/A";
+        const name = element.querySelector("span.a-color-base ")?.innerText || "Not Found";
+        const description = element.querySelector("span.a-text-normal")?.innerText || "Not Found";
+        const rating = element.querySelector("span.a-icon-alt")?.innerText || "Not Found";
+        const reviews = element.querySelector("span.a-size-base")?.innerText || "Not Found";
+        const price = element.querySelector("span.a-offscreen")?.innerText || "Not Found";
 
         const reviewsLink = element.querySelector("a.a-link-normal")?.getAttribute("href");
         console.log("reviews Link : ", reviewsLink);
@@ -83,7 +81,7 @@ app.get("/search", async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      error: "Failed to retrieve product details",
+      error: "Failed to retrieve data",
     });
   }
 });
